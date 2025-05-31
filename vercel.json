@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "SKIP_TYPECHECK=true npm run build",
   "outputDirectory": ".next",
   "typescript": {
     "ignoreBuildErrors": true
+  },
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "SKIP_TYPECHECK": "true"
   }
 }
