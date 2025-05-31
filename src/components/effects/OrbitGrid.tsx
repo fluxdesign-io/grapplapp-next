@@ -40,8 +40,19 @@ const OrbitGrid: React.FC<OrbitGridProps> = ({
     let time = 0;
     let animationFrameId: number;
     
+    // Define point type
+    interface GridPoint {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      color: string;
+      alpha: number;
+    }
+  
     // Points for the grid
-    const points = [];
+    const points: GridPoint[] = [];
     const rows = Math.ceil(canvas.height / gridSize) + 1;
     const cols = Math.ceil(canvas.width / gridSize) + 1;
     
