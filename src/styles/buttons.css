@@ -1,0 +1,82 @@
+/* 
+ * GrapplApp Premium Button System
+ * Designed to provide a consistent, luxury experience across the application
+ */
+
+/* Base Button Styles */
+.grappl-button {
+  @apply inline-flex items-center justify-center;
+  @apply transition-all duration-300;
+  @apply font-medium text-base;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grappl-orange/50;
+}
+
+/* Primary Button - Orange Theme */
+.grappl-button-primary {
+  @apply bg-grappl-orange text-white;
+  @apply hover:bg-grappl-orange-light hover:shadow-lg hover:shadow-grappl-orange/20;
+  @apply active:bg-grappl-orange active:scale-[0.98];
+  @apply rounded-lg px-6 py-3;
+  @apply border border-transparent;
+}
+
+/* Secondary Button - Outline Style */
+.grappl-button-secondary {
+  @apply bg-white text-grappl-black;
+  @apply hover:bg-gray-50 hover:shadow-md;
+  @apply active:bg-gray-100 active:scale-[0.98];
+  @apply rounded-lg px-6 py-3;
+  @apply border border-gray-200;
+}
+
+/* Ghost Button - Minimal Style */
+.grappl-button-ghost {
+  @apply bg-transparent text-grappl-black;
+  @apply hover:bg-gray-50;
+  @apply active:bg-gray-100 active:scale-[0.98];
+  @apply rounded-lg px-6 py-3;
+}
+
+/* Tertiary Button - Light Background */
+.grappl-button-tertiary {
+  @apply bg-grappl-orange/10 text-grappl-orange;
+  @apply hover:bg-grappl-orange/20;
+  @apply active:bg-grappl-orange/15 active:scale-[0.98];
+  @apply rounded-lg px-6 py-3;
+}
+
+/* Size Variations */
+.grappl-button-sm {
+  @apply text-sm px-4 py-2;
+}
+
+.grappl-button-lg {
+  @apply text-lg px-8 py-4;
+}
+
+/* Special button - Download App with icon */
+.download-button {
+  @apply grappl-button grappl-button-primary;
+  @apply rounded-full pr-6 pl-4 py-2.5;
+  @apply flex items-center space-x-2;
+}
+
+.download-button svg {
+  @apply w-5 h-5;
+}
+
+/* Store buttons with premium styling */
+.store-button {
+  @apply transition-all duration-300;
+  @apply rounded-xl overflow-hidden;
+  @apply shadow-md hover:shadow-xl;
+  @apply hover:scale-105;
+  @apply active:scale-[0.98];
+}
+
+/* Disabled state */
+.grappl-button:disabled,
+.grappl-button[disabled] {
+  @apply opacity-50 cursor-not-allowed;
+  @apply hover:shadow-none hover:scale-100;
+}

@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Critical styles to prevent flash of unstyled content */
+:root {
+  --white: #ffffff;
+  --grappl-orange: #FF5800;
+}
+
+/* Force white background on core elements */
+html, body, #__next, #next, main, [data-reactroot] {
+  background-color: var(--white) !important;
+}
+
+/* Apply before any JavaScript loads */
+html::before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--white);
+  z-index: -9999;
+}
+
+/* Ensure white background from the very start */
+html, body, #__next {
+  background-color: white !important;
+}
+
+:root {
+  --grappl-orange: #FF5800;
+  --grappl-orange-light: #FF7A00;
+  --grappl-orange-ultra-light: #FFF0E8;
+  --grappl-black: #121212;
+  --grappl-white: #FFFFFF;
+  --grappl-gray-light: #F8F8F8;
+  --grappl-gray-100: #F2F2F2;
+  --grappl-gray-200: #E5E5E5;
+  --grappl-gray-300: #D4D4D4;
+  
+  /* Light theme by default */
+  --foreground-rgb: 18, 18, 18;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 248, 248, 248;
+  
+  /* UI effects */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06), 0 10px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--grappl-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--grappl-orange);
+  border-radius: 10px;
+  border: 2px solid var(--grappl-gray-100);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--grappl-orange-light);
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--grappl-orange);
+  color: white;
+}
+
+/* No dark mode override - we're using light theme only */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Force light theme even when user prefers dark */
+    --foreground-rgb: 18, 18, 18;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 248, 248, 248;
+  }
+}
+
+@layer base {
+  body {
+    @apply relative antialiased;
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+    overflow-x: hidden;
+  }
+  
+  /* Improved typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+@layer components {
+  .grappl-btn {
+    @apply relative px-6 py-3 bg-[#FF5800] text-white font-bold uppercase tracking-wider rounded-md 
+    transition-all duration-300 overflow-hidden before:absolute before:inset-0 before:bg-white 
+    before:scale-x-0 before:origin-right before:transition-transform before:duration-300 
+    hover:before:origin-left hover:before:scale-x-100 hover:text-[#FF5800] before:-z-10;
+  }
+  
+  .grappl-card {
+    @apply relative overflow-hidden rounded-xl bg-gradient-to-br from-white/10 to-white/5
+    backdrop-blur-md border border-white/10 p-6 transition-all duration-500
+    hover:border-[#FF5800]/30 hover:shadow-[0_0_30px_rgba(255,88,0,0.15)];
+  }
+  
+  .parallax-nebula {
+    @apply fixed inset-0 -z-10 opacity-10;
+    background-image: radial-gradient(circle at center, rgba(255, 88, 0, 0.4) 0%, transparent 70%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px rgba(255, 88, 0, 0.8);
+  }
+  
+  .perspective {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+}

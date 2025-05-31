@@ -1,0 +1,340 @@
+import React, { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+import dynamic from 'next/dynamic';
+import AnimatedButton from '../ui/AnimatedButton';
+import { useIntersectionObserver } from '@/lib/hooks/useIntersectionObserver';
+
+// Dynamically import PhoneMockup to ensure it's loaded only on client-side
+const PhoneMockup = dynamic(() => import('@/components/ui/PhoneMockup'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full aspect-[9/19] max-w-[320px] rounded-[45px] bg-white/80 animate-pulse"></div>
+  ),
+});
+
+// Register GSAP plugins
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+}
+
+export default function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subHeadingRef = useRef<HTMLParagraphElement>(null);
+  const ctaButtonsRef = useRef<HTMLDivElement>(null);
+  const decorativeElementsRef = useRef<HTMLDivElement>(null);
+  const [phoneRef, isPhoneVisible] = useIntersectionObserver<HTMLDivElement>({
+    threshold: 0.3,
+    once: true,
+  });
+  
+  // Scroll progress state for the 3D phone animation
+  const scrollProgressRef = useRef(0);
+  
+  // Particle system state
+  const particles = useRef<Array<{x: number, y: number, size: number, speed: number, opacity: number}>>(
+    Array.from({ length: 50 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      speed: Math.random() * 1 + 0.5,
+      opacity: Math.random() * 0.5 + 0.2
+    }))
+  );
+  
+  // Advanced animation orchestration when component mounts
+  useEffect(() => {
+    if (!headingRef.current || !subHeadingRef.current || !ctaButtonsRef.current) return;
+    
+    // Create text animations with SplitText
+    const splitHeading = new SplitText(headingRef.current, { type: "words,chars" });
+    const splitSubheading = new SplitText(subHeadingRef.current, { type: "lines" });
+    
+    // Animate heading with staggered character animation
+    gsap.from(splitHeading.chars, {
+      opacity: 0,
+      y: 20,
+      rotateX: -90,
+      stagger: 0.02,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+    });
+    
+    // Animate subheading lines
+    gsap.from(splitSubheading.lines, {
+      opacity: 0,
+      y: 20,
+      stagger: 0.1,
+      duration: 0.6,
+      delay: 0.5,
+      ease: "power3.out",
+    });
+    
+    // Animate CTA buttons
+    gsap.from(ctaButtonsRef.current.children, {
+      opacity: 0,
+      y: 30,
+      stagger: 0.15,
+      duration: 0.8,
+      delay: 0.8,
+      ease: "elastic.out(1, 0.5)",
+    });
+    
+    // Add scroll-triggered animations
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => {
+        scrollProgressRef.current = self.progress;
+      },
+    });
+    
+    return () => {
+      scrollTrigger.kill();
+    };
+  }, []);
+  
+  // Particle effect variants for Framer Motion
+  const particleVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: (i: number) => ({
+      opacity: 0.7,
+      scale: 1,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.8,
+        repeat: Infinity,
+        repeatType: 'reverse' as const,
+        repeatDelay: 2 + i * 0.5,
+      },
+    }),
+  };
+  
+  return (
+    <section id="hero" ref={containerRef as React.RefObject<HTMLElement>} className="relative min-h-screen flex flex-col justify-center overflow-hidden py-20">
+      {/* Advanced light & orange background with atmospheric elements */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white to-grappl-gray-light">
+        {/* Premium design system - depth layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-gray-50"></div>
+        
+        {/* Subtle layered depth effect with radial gradients */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,88,0,0.08),transparent_60%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(255,88,0,0.05),transparent_50%)]"></div>
+        
+        {/* Sophisticated grid pattern with enhanced visual texture */}
+        <div className="absolute top-0 left-0 right-0 h-full w-full bg-[url('/grid-pattern-light.png')] bg-repeat opacity-5"></div>
+        
+        {/* Premium boundary accent with perfect proportions */}
+        <div className="absolute inset-[10%] border-[1px] border-dashed border-grappl-orange/10 rounded-[2.5rem] opacity-40"></div>
+        
+        {/* Elegant accent lines inspired by martial arts mats */}
+        <div className="absolute left-[5%] top-[15%] w-[30%] h-[1px] bg-gradient-to-r from-transparent via-grappl-orange/20 to-transparent"></div>
+        <div className="absolute right-[5%] bottom-[15%] w-[30%] h-[1px] bg-gradient-to-r from-transparent via-grappl-orange/20 to-transparent"></div>
+        
+        {/* Dynamic light sources with fluid movement */}
+        <motion.div
+          className="absolute top-[15%] right-[20%] w-[500px] h-[500px] rounded-full bg-gradient-radial from-grappl-orange-ultra-light via-orange-50/20 to-transparent blur-3xl"
+          animate={{ 
+            scale: [1, 1.1, 1], 
+            opacity: [0.4, 0.6, 0.4],
+            x: [0, 20, 0],
+            y: [0, -15, 0]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        ></motion.div>
+        
+        <motion.div
+          className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] rounded-full bg-gradient-radial from-grappl-orange-ultra-light via-orange-50/20 to-transparent blur-3xl"
+          animate={{ 
+            scale: [1, 1.15, 1], 
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, -20, 0],
+            y: [0, 15, 0] 
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        ></motion.div>
+        
+        {/* Advanced particle system */}
+        {particles.current.map((particle, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-grappl-orange z-0"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              opacity: particle.opacity,
+            }}
+            animate={{
+              y: [0, particle.y < 50 ? 100 : -100],
+              opacity: [particle.opacity, 0],
+            }}
+            transition={{
+              duration: particle.speed * 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          ></motion.div>
+        ))}
+        
+        {/* Decorative belt-inspired elements */}
+        <div 
+          ref={decorativeElementsRef} 
+          className="absolute w-full h-full overflow-hidden pointer-events-none"
+        >
+          <div className="absolute top-[15%] left-[5%] w-32 h-1.5 bg-grappl-orange rounded-full opacity-40"></div>
+          <div className="absolute top-[18%] left-[5%] w-20 h-1.5 bg-black rounded-full opacity-40"></div>
+          <div className="absolute top-[12%] left-[5%] w-24 h-1.5 bg-grappl-orange rounded-full opacity-40"></div>
+          
+          <div className="absolute top-[30%] right-[10%] w-24 h-1.5 bg-grappl-orange rounded-full opacity-40"></div>
+          <div className="absolute top-[33%] right-[10%] w-16 h-1.5 bg-black rounded-full opacity-40"></div>
+          
+          <div className="absolute bottom-[20%] right-[5%] w-20 h-1.5 bg-grappl-orange rounded-full opacity-40"></div>
+          <div className="absolute bottom-[18%] right-[5%] w-12 h-1.5 bg-black rounded-full opacity-40"></div>
+          <div className="absolute bottom-[22%] right-[5%] w-16 h-1.5 bg-grappl-orange rounded-full opacity-40"></div>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 z-10">
+        {/* Two-column layout */}
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          {/* Text content */}
+          <div className="w-full lg:w-1/2">
+            <motion.div 
+              className="max-w-xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Main heading with enhancement */}
+              <motion.h1
+                ref={headingRef}
+                className="text-5xl md:text-6xl font-bold text-grappl-black leading-tight"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                style={{ textShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
+              >
+                The <span className="text-grappl-orange inline-block relative">
+                  ultimate
+                  <motion.span 
+                    className="absolute -bottom-2 left-0 w-full h-1 bg-grappl-orange/30 rounded-full"
+                    animate={{ width: ['0%', '100%', '90%'] }}
+                    transition={{ duration: 1.5, delay: 1.2 }}
+                  ></motion.span>
+                </span> app 
+                for Jiu-Jitsu community
+              </motion.h1>
+              
+              {/* Subheading */}
+              <motion.p 
+                ref={subHeadingRef}
+                className="mt-6 text-xl text-gray-600"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                Find a training partner, schedule a private lesson, or discover open mats anywhere in the world with GrapplApp.
+              </motion.p>
+              
+              {/* CTA buttons with enhanced styling */}
+              <div 
+                ref={ctaButtonsRef}
+                className="mt-8 flex flex-wrap gap-4"
+              >
+                <AnimatedButton 
+                  href="/download" 
+                  variant="primary" 
+                  className="bg-grappl-orange hover:bg-grappl-orange-light text-white shadow-lg shadow-grappl-orange/20"
+                >
+                  <span className="relative z-10">Download App</span>
+                </AnimatedButton>
+                <AnimatedButton 
+                  href="/learn-more" 
+                  variant="outline" 
+                  className="border-2 border-grappl-orange/20 text-grappl-black hover:border-grappl-orange/40 hover:bg-grappl-orange-ultra-light"
+                >
+                  <span className="relative z-10">Open Mat Registry</span>
+                </AnimatedButton>
+              </div>
+
+              {/* Trust indicators with belt rank inspiration */}
+              <div className="mt-6 pt-8 border-t border-gray-200">
+                <p className="text-sm text-gray-500 mb-3">Trusted by over 21,000+ practitioners worldwide</p>
+                <div className="flex flex-wrap gap-8 items-center">
+                  {/* Belt-inspired trust indicators */}
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-4 h-4 rounded-full bg-white border-2 border-gray-200"></div>
+                    <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+                    <div className="w-4 h-4 rounded-full bg-purple-500"></div>
+                    <div className="text-sm font-medium ml-2">Training Partners</div>
+                  </div>
+                  
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-4 h-4 rounded-full bg-brown-600"></div>
+                    <div className="w-4 h-4 rounded-full bg-black"></div>
+                    <div className="w-4 h-4 rounded-full bg-grappl-orange"></div>
+                    <div className="text-sm font-medium ml-2">Professors</div>
+                  </div>
+                  
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-4 h-4 rounded-full bg-grappl-orange"></div>
+                    <div className="w-4 h-4 rounded-full bg-white border-2 border-gray-200"></div>
+                    <div className="w-4 h-4 rounded-full bg-grappl-orange"></div>
+                    <div className="text-sm font-medium ml-2">Studios & Gyms</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* 3D Phone */}
+          <div 
+            ref={phoneRef}
+            className="w-full lg:w-1/2 flex justify-center z-10"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={isPhoneVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="w-full max-w-md"
+            >
+              <PhoneMockup />
+              
+              {/* Orange glow effect under the phone */}
+              <div className="w-full h-24 bg-grappl-orange/10 blur-2xl rounded-full mt-[-40px] mx-auto z-0"></div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+      >
+        <p className="text-sm text-gray-500 mb-2">Scroll to Explore</p>
+        <div className="w-6 h-9 border-2 border-grappl-orange rounded-full flex items-start justify-center p-1">
+          <motion.div 
+            className="w-1 h-2 bg-grappl-orange rounded-full"
+            animate={{ 
+              y: [0, 15, 0],
+            }}
+            transition={{ 
+              repeat: Infinity,
+              duration: 1.5,
+              ease: "easeInOut",
+            }}
+          ></motion.div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

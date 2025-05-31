@@ -1,0 +1,150 @@
+/* 
+ * SPACEX-INSPIRED ANIMATIONS
+ * Custom animation library for GrapplApp's futuristic interface
+ */
+
+/* Progress bar animation - used in loading screens */
+@keyframes progressBar {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+/* Pulse effect - used for interactive elements */
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Orbital rotation - used for circular elements */
+@keyframes orbital {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Counter-orbital rotation - opposite direction */
+@keyframes counterOrbital {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Slide up with fade */
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  0% { transform: translateX(20px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Glitch effect - tech distortion */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Typing cursor animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Data stream animation */
+@keyframes dataStream {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Particle float animation */
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Rocket launch animation */
+@keyframes rocketLaunch {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-500px); opacity: 0; }
+}
+
+/* Utility classes for easy animation application */
+.animate-orbital {
+  animation: orbital 30s linear infinite;
+}
+
+.animate-counter-orbital {
+  animation: counterOrbital 25s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.5s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+/* SpaceX-inspired cursor styles */
+.custom-cursor-outer {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #FF5800;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.custom-cursor-inner {
+  width: 6px;
+  height: 6px;
+  background-color: #FF5800;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s, opacity 0.15s;
+}

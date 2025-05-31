@@ -1,0 +1,217 @@
+"use client";
+
+import { useRef, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { useAppStore } from '@/lib/store/useAppStore';
+import Image from 'next/image';
+
+// Layout components
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+
+// Section components (static import for critical sections)
+import HeroSection from '@/components/sections/HeroSection';
+
+// Dynamic imports for non-critical sections to improve initial load performance
+const AppShowcaseSection = dynamic(() => import('@/components/sections/AppShowcaseSection'), {
+  loading: () => <SectionLoading title="App Showcase" />
+});
+
+const CommunitySection = dynamic(() => import('@/components/sections/CommunitySection'), {
+  loading: () => <SectionLoading title="Community" />
+});
+
+const InstallationSection = dynamic(() => import('@/components/sections/InstallationSection'), {
+  loading: () => <SectionLoading title="Installation" />
+});
+
+const BusinessSection = dynamic(() => import('@/components/sections/BusinessSection'), {
+  loading: () => <SectionLoading title="Business" />
+});
+
+// Loading placeholder for lazy-loaded sections
+function SectionLoading({ title }: { title: string }) {
+  return (
+    <section className="min-h-screen flex items-center justify-center bg-white">
+      <div className="text-center">
+        <div className="inline-block w-12 h-12 border-4 border-grappl-orange border-t-transparent rounded-full animate-spin mb-4"></div>
+        <h2 className="text-xl font-semibold text-grappl-black">Loading {title} Section...</h2>
+      </div>
+    </section>
+  );
+}
+
+// Custom cursor component with reduced complexity
+function CustomCursor() {
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const [isPointer, setIsPointer] = useState(false);
+  
+  useEffect(() => {
+    if (!cursorRef.current) return;
+    
+    const cursor = cursorRef.current;
+    
+    const updateCursor = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    };
+    
+    const updateCursorType = () => {
+      const hoveredElement = document.querySelectorAll("a:hover, button:hover, [role='button']:hover");
+      setIsPointer(hoveredElement.length > 0);
+    };
+    
+    window.addEventListener('mousemove', updateCursor);
+    window.addEventListener('mouseover', updateCursorType);
+    
+    return () => {
+      window.removeEventListener('mousemove', updateCursor);
+      window.removeEventListener('mouseover', updateCursorType);
+    };
+  }, []);
+  
+  return (
+    <motion.div
+      ref={cursorRef}
+      className="fixed w-5 h-5 pointer-events-none z-50 rounded-full mix-blend-difference"
+      style={{ backgroundColor: '#FF5800' }}
+      animate={{
+        scale: isPointer ? 1.5 : 1,
+        opacity: 0.7,
+      }}
+      transition={{ duration: 0.15 }}
+    ></motion.div>
+  );
+}
+
+// Simplified intersection observer hook for better performance
+function useSectionObserver() {
+  const updateSection = useAppStore(state => state.updateCurrentSection);
+  
+  useEffect(() => {
+    const sections = document.querySelectorAll('section[id]');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.id) {
+          updateSection(entry.target.id);
+        }
+      });
+    }, { threshold: 0.35 });
+    
+    sections.forEach(section => observer.observe(section));
+    
+    return () => observer.disconnect();
+  }, [updateSection]);
+}
+
+export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
+  
+  // Track sections with IntersectionObserver
+  useSectionObserver();
+  
+  // Initial loading animation - optimized for performance
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Reduced timeout to prevent the site getting stuck
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  if (!isClient) {
+    return null; // Prevent hydration mismatch
+  }
+  
+  return (
+    <>
+      {/* Custom cursor - with reduced animation complexity */}
+      <CustomCursor />
+      
+      {/* Premium light theme loading screen */}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-white flex items-center justify-center"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+              className="text-center"
+            >
+              <div className="flex flex-col items-center justify-center">
+                {/* Simplified loading animation for better performance */}
+                <div className="relative w-32 h-32 mb-6">
+                  {/* Simple spinner */}
+                  <div className="absolute inset-0 rounded-full border-4 border-gray-100"></div>
+                  <motion.div 
+                    className="absolute inset-0 rounded-full border-4 border-transparent border-t-grappl-orange"
+                    animate={{ rotate: 360 }}
+                    transition={{ 
+                      duration: 1, 
+                      ease: "linear", 
+                      repeat: Infinity 
+                    }}
+                  ></motion.div>
+                  
+                  {/* Logo */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {typeof window !== "undefined" && 
+                      <img 
+                        src="/images/TheAppCircle (1).png" 
+                        alt="GrapplApp Logo" 
+                        className="w-16 h-16 object-contain"
+                      />
+                    }
+                  </div>
+                </div>
+                
+                {/* Premium typography */}
+                <motion.h1 
+                  className="text-4xl font-bold text-grappl-black mb-2"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                >
+                  <span className="text-grappl-orange">Grappl</span>App
+                </motion.h1>
+                
+                <motion.p 
+                  className="text-base text-gray-600"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
+                >
+                  Loading digital experience...
+                </motion.p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Header */}
+      <Header />
+      
+      {/* Main content sections */}
+      <HeroSection />
+      <AppShowcaseSection />
+      <CommunitySection />
+      <InstallationSection />
+      <BusinessSection />
+      
+      {/* Footer */}
+      <Footer />
+    </>
+  );
+}

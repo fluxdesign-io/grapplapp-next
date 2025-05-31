@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrapplApp - BJJ Training</title>
+  <style>
+    /* Force white background immediately */
+    html { 
+      background-color: white !important; 
+    }
+    body { 
+      background-color: white !important; 
+      margin: 0; 
+      padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    #app-container {
+      min-height: 100vh;
+      background-color: white;
+    }
+    #loading-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+    }
+    .logo-container {
+      width: 180px;
+      height: 80px;
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #FF5800;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+    .dot:nth-child(1) { animation: pulse 1.5s infinite 0s; }
+    .dot:nth-child(2) { animation: pulse 1.5s infinite 0.3s; }
+    .dot:nth-child(3) { animation: pulse 1.5s infinite 0.6s; }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- This loading screen shows before anything else -->
+  <div id="loading-screen">
+    <div class="logo-container">
+      <img src="/images/PRIMARYGrapplAppLogoORGBLK (1).png" alt="GrapplApp" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <div id="app-container"></div>
+  
+  <script>
+    // This ensures the white loading screen stays visible until the app loads
+    document.addEventListener('DOMContentLoaded', function() {
+      var appRoot = document.getElementById('app-container');
+      var loadingScreen = document.getElementById('loading-screen');
+      
+      // Create a failsafe timer to hide loading screen after 3 seconds
+      // in case the app never fully loads
+      setTimeout(function() {
+        if (loadingScreen && loadingScreen.parentNode) {
+          loadingScreen.style.transition = 'opacity 0.3s ease-out';
+          loadingScreen.style.opacity = '0';
+          setTimeout(function() {
+            loadingScreen.parentNode.removeChild(loadingScreen);
+          }, 300);
+        }
+      }, 3000);
+      
+      // Main app loader - redirect to the actual app
+      if (!window.location.pathname.includes('_next')) {
+        // Only redirect if we're on the index page
+        window.location.href = '/_next/static/development/pages/index.html';
+      }
+    });
+  </script>
+</body>
+</html>

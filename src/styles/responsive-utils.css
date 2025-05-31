@@ -1,0 +1,131 @@
+/* 
+ * Responsive Utility Classes for GrapplApp
+ * Optimized for both mobile and desktop experiences
+ */
+
+/* Mobile optimization - reduce animations on smaller screens */
+@media (max-width: 768px) {
+  .reduce-motion {
+    transition-duration: 50% !important;
+    animation-duration: 50% !important;
+  }
+  
+  /* Improve touch targets for mobile */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Optimize font rendering on mobile */
+  body {
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* General responsive helpers */
+.responsive-container {
+  width: 100%;
+  max-width: 95vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-container {
+    max-width: 90vw;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: 85vw;
+  }
+}
+
+/* Responsive typography */
+.responsive-text-sm {
+  font-size: 0.875rem;
+}
+
+.responsive-text-base {
+  font-size: 1rem;
+}
+
+.responsive-text-lg {
+  font-size: 1.125rem;
+}
+
+.responsive-text-xl {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-text-sm {
+    font-size: 1rem;
+  }
+  
+  .responsive-text-base {
+    font-size: 1.125rem;
+  }
+  
+  .responsive-text-lg {
+    font-size: 1.25rem;
+  }
+  
+  .responsive-text-xl {
+    font-size: 1.5rem;
+  }
+}
+
+/* Better image loading on all devices */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Optimize for devices with notches */
+@supports (padding: max(0px)) {
+  .notch-friendly-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Optimize forms for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  input, 
+  textarea, 
+  select, 
+  button {
+    font-size: 16px !important; /* Prevents iOS zoom on input focus */
+  }
+  
+  button, 
+  .button, 
+  [role="button"] {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* Print styles - to ensure the site looks good when printed */
+@media print {
+  body {
+    color: #000;
+    background: #fff;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

@@ -1,0 +1,516 @@
+/* 
+ * NEXUS-X REVOLUTIONARY DESIGN SYSTEM
+ * A premium design language that transcends conventional boundaries
+ * Created for GrapplApp - The ultimate Jiu-Jitsu community platform
+ */
+
+/* ====== CORE VARIABLES ====== */
+:root {
+  /* Brand palette - Primary */
+  --nexus-orange-base: #FF5800;
+  --nexus-orange-light: #FF7A00;
+  --nexus-orange-ultra-light: #FFF0E8;
+  --nexus-orange-dark: #E04D00;
+
+  /* Neutrals - Sophisticated grayscale */
+  --nexus-white: #FFFFFF;
+  --nexus-off-white: #FAFAFA;
+  --nexus-gray-50: #F7F7F7;
+  --nexus-gray-100: #F2F2F2;
+  --nexus-gray-200: #E5E5E5;
+  --nexus-gray-300: #D4D4D4;
+  --nexus-gray-400: #A3A3A3;
+  --nexus-gray-500: #737373;
+  --nexus-gray-600: #525252;
+  --nexus-gray-700: #404040;
+  --nexus-gray-800: #262626;
+  --nexus-gray-900: #171717;
+  --nexus-black: #0A0A0A;
+
+  /* Accent colors - Belt-inspired */
+  --nexus-blue: #3B82F6;
+  --nexus-blue-light: #60A5FA;
+  --nexus-blue-dark: #2563EB;
+  
+  --nexus-purple: #8B5CF6;
+  --nexus-purple-light: #A78BFA;
+  --nexus-purple-dark: #7C3AED;
+  
+  --nexus-brown: #92400E;
+  --nexus-brown-light: #B45309;
+  --nexus-brown-dark: #78350F;
+  
+  /* Elevation system - Advanced layering */
+  --nexus-elevation-surface: 0px 1px 1px rgba(0, 0, 0, 0.03), 
+                             0px 2px 5px rgba(0, 0, 0, 0.03);
+  
+  --nexus-elevation-raised: 0px 2px 4px rgba(0, 0, 0, 0.03), 
+                            0px 4px 8px rgba(0, 0, 0, 0.05);
+  
+  --nexus-elevation-floating: 0px 6px 16px rgba(0, 0, 0, 0.05), 
+                              0px 2px 4px rgba(0, 0, 0, 0.03);
+  
+  --nexus-elevation-prominent: 0px 12px 24px rgba(0, 0, 0, 0.07), 
+                               0px 4px 8px rgba(0, 0, 0, 0.04);
+  
+  --nexus-elevation-modal: 0px 24px 40px rgba(0, 0, 0, 0.09), 
+                           0px 8px 16px rgba(0, 0, 0, 0.06);
+
+  /* Typography system - Refined reading */
+  --nexus-font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --nexus-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --nexus-font-mono: 'Menlo', 'Monaco', 'Consolas', monospace;
+  
+  /* Spacing system - Harmonious proportions */
+  --nexus-space-3xs: 0.125rem; /* 2px */
+  --nexus-space-2xs: 0.25rem;  /* 4px */
+  --nexus-space-xs: 0.5rem;    /* 8px */
+  --nexus-space-s: 0.75rem;    /* 12px */
+  --nexus-space-m: 1rem;       /* 16px */
+  --nexus-space-l: 1.5rem;     /* 24px */
+  --nexus-space-xl: 2rem;      /* 32px */
+  --nexus-space-2xl: 3rem;     /* 48px */
+  --nexus-space-3xl: 4rem;     /* 64px */
+  --nexus-space-4xl: 6rem;     /* 96px */
+
+  /* Border radius - Consistent curvature */
+  --nexus-radius-sm: 0.25rem;  /* 4px */
+  --nexus-radius-md: 0.5rem;   /* 8px */
+  --nexus-radius-lg: 0.75rem;  /* 12px */
+  --nexus-radius-xl: 1rem;     /* 16px */
+  --nexus-radius-2xl: 1.5rem;  /* 24px */
+  --nexus-radius-full: 9999px;
+
+  /* Z-index system - Layering control */
+  --nexus-z-below: -1;
+  --nexus-z-base: 0;
+  --nexus-z-above: 1;
+  --nexus-z-sticky: 100;
+  --nexus-z-overlay: 200;
+  --nexus-z-modal: 300;
+  --nexus-z-toast: 400;
+  --nexus-z-tooltip: 500;
+  --nexus-z-max: 9999;
+
+  /* Animation system - Organic movement */
+  --nexus-transition-fast: 150ms;
+  --nexus-transition-medium: 300ms;
+  --nexus-transition-slow: 500ms;
+  --nexus-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --nexus-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --nexus-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --nexus-spring: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ====== GLOBAL RESET ====== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--nexus-white);
+  color: var(--nexus-gray-800);
+  font-family: var(--nexus-font-body);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ====== TYPOGRAPHY SYSTEM ====== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--nexus-font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--nexus-gray-900);
+}
+
+.nexus-text-gradient {
+  background: linear-gradient(135deg, var(--nexus-orange-base) 0%, var(--nexus-orange-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nexus-heading-xl {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.nexus-heading-lg {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.nexus-heading-md {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+
+.nexus-heading-sm {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.3;
+}
+
+.nexus-text-lg {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.nexus-text-md {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.nexus-text-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.nexus-text-xs {
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+/* ====== CONTAINER SYSTEM ====== */
+.nexus-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--nexus-space-m);
+}
+
+@media (min-width: 640px) {
+  .nexus-container {
+    padding-inline: var(--nexus-space-l);
+  }
+}
+
+@media (min-width: 1024px) {
+  .nexus-container {
+    padding-inline: var(--nexus-space-xl);
+  }
+}
+
+/* ====== BUTTON SYSTEM ====== */
+.nexus-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: var(--nexus-radius-md);
+  transition: all var(--nexus-transition-medium) var(--nexus-ease-out);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  text-decoration: none;
+}
+
+.nexus-button-primary {
+  background-color: var(--nexus-orange-base);
+  color: var(--nexus-white);
+  padding: var(--nexus-space-xs) var(--nexus-space-l);
+}
+
+.nexus-button-primary:hover {
+  background-color: var(--nexus-orange-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 88, 0, 0.25);
+}
+
+.nexus-button-primary:active {
+  transform: translateY(0);
+}
+
+.nexus-button-secondary {
+  background-color: var(--nexus-gray-100);
+  color: var(--nexus-gray-900);
+  padding: var(--nexus-space-xs) var(--nexus-space-l);
+  border: 1px solid var(--nexus-gray-200);
+}
+
+.nexus-button-secondary:hover {
+  background-color: var(--nexus-gray-200);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.nexus-button-ghost {
+  background-color: transparent;
+  color: var(--nexus-orange-base);
+  padding: var(--nexus-space-xs) var(--nexus-space-l);
+}
+
+.nexus-button-ghost:hover {
+  background-color: var(--nexus-orange-ultra-light);
+}
+
+/* ====== CARD SYSTEM ====== */
+.nexus-card {
+  background-color: var(--nexus-white);
+  border-radius: var(--nexus-radius-lg);
+  box-shadow: var(--nexus-elevation-raised);
+  overflow: hidden;
+  transition: transform var(--nexus-transition-medium) var(--nexus-spring),
+              box-shadow var(--nexus-transition-medium) var(--nexus-ease-out);
+}
+
+.nexus-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--nexus-elevation-floating);
+}
+
+.nexus-card-premium {
+  position: relative;
+  background-color: var(--nexus-white);
+  border-radius: var(--nexus-radius-xl);
+  box-shadow: var(--nexus-elevation-floating);
+  overflow: hidden;
+  transition: all var(--nexus-transition-medium) var(--nexus-spring);
+}
+
+.nexus-card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--nexus-transition-medium) var(--nexus-ease-out);
+}
+
+.nexus-card-premium:hover::before {
+  opacity: 1;
+}
+
+.nexus-card-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--nexus-elevation-prominent);
+}
+
+/* ====== GRID SYSTEM ====== */
+.nexus-grid {
+  display: grid;
+  gap: var(--nexus-space-l);
+}
+
+.nexus-grid-cols-1 {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 640px) {
+  .nexus-grid-cols-sm-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .nexus-grid-cols-md-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .nexus-grid-cols-md-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .nexus-grid-cols-lg-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .nexus-grid-cols-lg-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ====== MOTION EFFECTS ====== */
+.nexus-hover-float {
+  transition: transform var(--nexus-transition-medium) var(--nexus-spring);
+}
+
+.nexus-hover-float:hover {
+  transform: translateY(-6px);
+}
+
+.nexus-hover-scale {
+  transition: transform var(--nexus-transition-medium) var(--nexus-spring);
+}
+
+.nexus-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Parallax container */
+.nexus-parallax-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ====== DECORATIVE ELEMENTS ====== */
+.nexus-gradient-orange {
+  background: linear-gradient(135deg, var(--nexus-orange-base) 0%, var(--nexus-orange-light) 100%);
+}
+
+.nexus-gradient-blue {
+  background: linear-gradient(135deg, var(--nexus-blue-dark) 0%, var(--nexus-blue-light) 100%);
+}
+
+.nexus-gradient-belt {
+  background: linear-gradient(to right, 
+    var(--nexus-white) 0%, 
+    var(--nexus-blue) 20%, 
+    var(--nexus-purple) 40%, 
+    var(--nexus-brown) 60%, 
+    var(--nexus-black) 80%,
+    var(--nexus-orange-base) 100%
+  );
+}
+
+.nexus-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nexus-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--nexus-gray-200),
+    transparent
+  );
+}
+
+/* ====== UTILITY CLASSES ====== */
+.nexus-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.nexus-focus-ring {
+  outline: none;
+  position: relative;
+}
+
+.nexus-focus-ring:focus-visible::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: var(--nexus-radius-md);
+  border: 2px solid var(--nexus-orange-base);
+  box-shadow: 0 0 0 2px rgba(255, 88, 0, 0.3);
+  pointer-events: none;
+}
+
+/* ====== PREMIUM ANIMATIONS ====== */
+@keyframes nexus-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.nexus-animate-float {
+  animation: nexus-float 5s ease-in-out infinite;
+}
+
+@keyframes nexus-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.nexus-animate-pulse {
+  animation: nexus-pulse 3s ease-in-out infinite;
+}
+
+@keyframes nexus-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.nexus-animate-shimmer {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: nexus-shimmer 2s infinite linear;
+}
+
+/* ====== ACCESSIBILITY ENHANCEMENTS ====== */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus state improvements for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--nexus-orange-base);
+  outline-offset: 2px;
+}
+
+/* Print styles optimization */
+@media print {
+  .nexus-no-print {
+    display: none !important;
+  }
+}
+
+/* Dark mode preparation (disabled for now) 
+   Note: As per memory, we're sticking with light/orange theme 
+   and have intentionally disabled dark mode styling */
+
+/* 
+@media (prefers-color-scheme: dark) {
+  .nexus-future-dark-mode {
+    color-scheme: dark;
+    --text-primary: rgba(255, 255, 255, 0.9);
+    --bg-primary: #121212;
+  }
+}
+*/
