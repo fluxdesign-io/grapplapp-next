@@ -87,7 +87,7 @@ const QRCode = ({ value = 'https://grapplapp.com' }: { value?: string }) => {
   );
 };
 
-// Ultra-premium loading component with high-end design
+// Ultra-premium loading component with high-end design - white theme with orange accents
 function LoadingComponent() {
   // Animation variants for sequence
   const containerVariants = {
@@ -139,18 +139,22 @@ function LoadingComponent() {
     }
   };
   
+  // Premium white & orange themed loading animation
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden relative">
+    <div className="min-h-screen flex items-center justify-center bg-white overflow-hidden relative">
+      {/* Subtle grid pattern overlay */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
+      
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Abstract grid */}
-        <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-20">
+        {/* Subtle decorative grid */}
+        <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-10">
           {Array(24).fill(0).map((_, i) => (
             <motion.div 
               key={i}
-              className="border-[0.5px] border-gray-700 opacity-10"
+              className="border-[0.5px] border-orange-200 opacity-20"
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0.05, 0.1, 0.05] }}
+              animate={{ opacity: [0.05, 0.15, 0.05] }}
               transition={{ 
                 duration: 4, 
                 repeat: Infinity, 
@@ -161,7 +165,7 @@ function LoadingComponent() {
           ))}
         </div>
         
-        {/* Decorative circles */}
+        {/* Decorative orange circles */}
         {[...Array(5)].map((_, i) => {
           const size = 300 + (i * 50);
           return (
@@ -191,8 +195,15 @@ function LoadingComponent() {
         })}
       </div>
       
+      {/* Light orange gradient accents */}
+      <div className="absolute top-0 right-0 w-1/3 h-screen bg-orange-50/30 -z-10"></div>
+      <div className="absolute top-20 left-[10%] w-32 h-32 rounded-full bg-orange-100/20 blur-xl"></div>
+      <div className="absolute bottom-20 right-[15%] w-48 h-48 rounded-full bg-orange-50/30 blur-2xl"></div>
+      
+      {/* Main loading card */}
       <motion.div 
-        className="text-center z-10 px-8 py-12 bg-black/30 backdrop-blur-xl rounded-2xl border border-white/5 shadow-2xl"
+        className="text-center z-10 px-10 py-12 bg-white rounded-2xl border border-orange-100 shadow-xl"
+        style={{ boxShadow: '0 10px 40px -10px rgba(255, 88, 0, 0.1), 0 0 20px 0 rgba(0, 0, 0, 0.05)' }}
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -207,7 +218,7 @@ function LoadingComponent() {
             src="/images/PRIMARYGrapplAppLogoORGBLK (1).png" 
             alt="GrapplApp Logo" 
             fill
-            className="object-contain filter brightness-150 drop-shadow-[0_0_8px_rgba(255,88,0,0.6)]"
+            className="object-contain drop-shadow-[0_0_8px_rgba(255,88,0,0.3)]"
             priority
           />
           
@@ -216,7 +227,7 @@ function LoadingComponent() {
             className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF5800]/20 to-transparent"
             animate={{ 
               x: ["-100%", "100%"],
-              opacity: [0, 0.5, 0]
+              opacity: [0, 0.3, 0]
             }}
             transition={{ 
               repeat: Infinity, 
@@ -233,7 +244,7 @@ function LoadingComponent() {
         >
           <svg 
             viewBox="0 0 100 100" 
-            className="w-full h-full drop-shadow-[0_0_8px_rgba(255,88,0,0.6)]"
+            className="w-full h-full drop-shadow-[0_0_8px_rgba(255,88,0,0.4)]"
           >
             <motion.path
               d="M50 0 L93.3 25 L93.3 75 L50 100 L6.7 75 L6.7 25 Z"
@@ -250,7 +261,8 @@ function LoadingComponent() {
               cy="50" 
               r="25" 
               fill="none"
-              stroke="white"
+              stroke="#FF5800"
+              strokeOpacity="0.3"
               strokeWidth="1"
               strokeDasharray="157"
               animate={{ 
@@ -287,16 +299,16 @@ function LoadingComponent() {
         
         {/* Status text */}
         <motion.div 
-          className="text-white font-medium tracking-wider mb-6"
+          className="font-medium tracking-wider mb-6"
           variants={itemVariants}
         >
-          <div className="font-light text-sm text-gray-400 mb-1">INITIALIZING SYSTEM</div>
-          <div className="text-lg font-mono text-white">GRAPPL<span className="text-[#FF5800]">APP</span></div>
+          <div className="font-light text-sm text-gray-500 mb-1">INITIALIZING SYSTEM</div>
+          <div className="text-lg font-mono text-gray-800">GRAPPL<span className="text-[#FF5800]">APP</span></div>
         </motion.div>
         
         {/* Progress bar */}
         <motion.div 
-          className="w-64 h-[2px] bg-gray-800 rounded-full overflow-hidden mx-auto"
+          className="w-64 h-[2px] bg-gray-100 rounded-full overflow-hidden mx-auto"
           variants={itemVariants}
         >
           <motion.div 
